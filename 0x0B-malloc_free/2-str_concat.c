@@ -2,43 +2,42 @@
 #include <stdlib.h>
 
 /**
- * alloc_grid - allocate and initialize a 2D array of integers
- * @width: the width of the grid
- * @height: the height of the grid
- * Return: pointer to the 2D array of integers, or NULL if allocation fails
+ * str_concat - concatenates two strings
+ *
+ * @s1: first string to concatenate
+ * @s2: second string to concatenate
+ *
+ * Return: pointer to newly allocated space in memory containing the
+ * concatenated string or NULL on failure
  */
-int **alloc_grid(int width, int height)
+char *str_concat(char *s1, char *s2)
 {
-int **grid;
-int x, y;
+char *concat;
+int i = 0, j = 0, len1 = 0, len2 = 0;
 
-if (width <= 0 || height <= 0)
+if (s1 == NULL)
+s1 = "";
+if (s2 == NULL)
+s2 = "";
+
+while (s1[len1])
+len1++;
+
+while (s2[len2])
+len2++;
+
+concat = malloc(sizeof(char) * (len1 + len2 + 1));
+if (concat == NULL)
 return (NULL);
 
-grid = malloc(sizeof(int *) * height);
+while (*s1)
+concat[i++] = *s1++;
 
-if (grid == NULL)
-return (NULL);
+while (*s2)
+concat[i++] = *s2++;
 
-for (x = 0; x < height; x++)
-{
-grid[x] = malloc(sizeof(int) * width);
+concat[i] = '\0';
 
-if (grid[x] == NULL)
-{
-for (; x >= 0; x--)
-free(grid[x]);
-free(grid);
-return (NULL);
-}
-}
-
-for (x = 0; x < height; x++)
-{
-for (y = 0; y < width; y++)
-grid[x][y] = 0;
-}
-
-return (grid);
+return (concat);
 }
 
